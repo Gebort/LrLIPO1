@@ -3,8 +3,8 @@ package program
 // <ун. оп.> ::= -
 typealias Unary = Char
 
-fun Unary.checkUnary(line: Int) {
+fun Unary.checkUnary() {
     if (this != '-') {
-        throw Exception("Line $line: Unary operator can only be -")
+        throw Exception("Unary operator can only be -")
     }
 }

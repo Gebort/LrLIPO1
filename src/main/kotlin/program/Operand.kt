@@ -2,14 +2,14 @@ package program
 
 import java.lang.Exception
 
-class Operand(private val line: Int, private val data: String) {
+class Operand(private val data: String) {
     val ident: Ident?
     val constant: Constant?
 
     init {
         data.trim{it == ' ' }.let {
             ident = try {
-                it.also { it.checkIdent(line) }
+                it.also { it.checkIdent() }
             } catch (e: Exception) {
                 null
             }
@@ -20,7 +20,7 @@ class Operand(private val line: Int, private val data: String) {
             }
 
             if (ident == null && constant == null) {
-                throw Exception("Line $line: Operand must be ident or constant")
+                throw Exception("Operand must be ident or constant")
             }
         }
 

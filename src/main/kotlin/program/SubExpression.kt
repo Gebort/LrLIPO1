@@ -1,7 +1,7 @@
 package program
 
 // <подвыражение> ::= (<выражение>) | <операнд> | <подвыражение> <бин. оп.> <подвыражение>
-class SubExpression(private val line: Int, private val data: String) {
+class SubExpression(private val data: String) {
 
     val expression: Expression?
     val operand: Operand?
@@ -13,11 +13,11 @@ class SubExpression(private val line: Int, private val data: String) {
         val trimmedData = data.trim{ it == ' ' }
 
         if (trimmedData.isEmpty()) {
-            throw Exception("Line $line: Empty sub expression")
+            throw Exception("Empty sub expression")
         }
 
         if (trimmedData.first() == '(' && trimmedData.last() == ')') {
-            expression = Expression(line, trimmedData.substring(1, trimmedData.length-1))
+            expression = Expression(trimmedData.substring(1, trimmedData.length-1))
             operand = null
             subExpression1 = null
             subExpression2 = null
@@ -25,7 +25,7 @@ class SubExpression(private val line: Int, private val data: String) {
         }
         else {
             operand = try {
-                Operand(line, trimmedData)
+                Operand(trimmedData)
             } catch (e: Exception) {
                 null
             }
@@ -42,8 +42,8 @@ class SubExpression(private val line: Int, private val data: String) {
                 val right = trimmedData.substring(binaryIndex + 1)
 
                 binary = trimmedData[binaryIndex]
-                subExpression1 = SubExpression(line, left)
-                subExpression2 = SubExpression(line, right)
+                subExpression1 = SubExpression(left)
+                subExpression2 = SubExpression(right)
                 expression = null
             }
         }
@@ -51,7 +51,7 @@ class SubExpression(private val line: Int, private val data: String) {
 
     private fun isBinarySafe(char: Char): Boolean {
         return try {
-            char.checkBinary(line)
+            char.checkBinary()
             true
         } catch (e: Exception) {
             false
@@ -72,12 +72,12 @@ class SubExpression(private val line: Int, private val data: String) {
             }
         }
         if (openBrackets > 0){
-            throw Exception("Line $line: Missing closing brackets")
+            throw Exception("Missing closing brackets")
         }
         else if (openBrackets < 0){
-            throw Exception("Line $line: Missing opening brackets")
+            throw Exception("Missing opening brackets")
         }
-        throw Exception("Line $line: No binary operator in line")
+        throw Exception("No binary operator in line")
     }
 
 }

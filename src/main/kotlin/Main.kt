@@ -1,6 +1,5 @@
 import program.Program
 import java.util.*
-import java.util.function.Consumer
 
 object Main {
 
@@ -41,7 +40,7 @@ object Main {
                 val program = Program(str)
                 println("Success")
             } catch (e: Exception) {
-                println("Error: ${e.message}")
+                println(e.message)
             }
         }
     }

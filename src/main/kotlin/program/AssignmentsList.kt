@@ -17,7 +17,11 @@ class AssignmentsList(private val data: String) {
             .removeSuffix(";")
             .split(';')
             .forEachIndexed { i, assign ->
-                assignments.add(Assignment(i+2, assign))
+                try {
+                assignments.add(Assignment(assign))
+                } catch (e: Exception) {
+                    throw Exception("Line ${i+2}: ${e.message}")
+                }
         }
 
     }

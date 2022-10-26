@@ -1,7 +1,7 @@
 package program
 
 // <выражение> ::= <ун. оп.> <подвыражение> | <подвыражение>
-class Expression(private val line: Int, private val data: String) {
+class Expression(private val data: String) {
 
     val unary: Unary?
     val subExpression: SubExpression
@@ -9,11 +9,11 @@ class Expression(private val line: Int, private val data: String) {
     init {
         val trimmedData = data.trim { it == ' ' }
         if (trimmedData.isEmpty()) {
-            throw Exception("Line $line: Empty expression")
+            throw Exception("Empty expression")
         }
 
         unary = try {
-            trimmedData.first().also { it.checkUnary(line) }
+            trimmedData.first().also { it.checkUnary() }
         } catch (e: Exception) {
             null
         }
@@ -22,7 +22,7 @@ class Expression(private val line: Int, private val data: String) {
             trimmedData.removePrefix(unary.toString())
         }
 
-        subExpression = SubExpression(line, trimmedData)
+        subExpression = SubExpression(trimmedData)
     }
 
 }
