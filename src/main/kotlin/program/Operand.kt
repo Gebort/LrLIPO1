@@ -9,7 +9,7 @@ class Operand(private val data: String) {
     init {
         data.trim{it == ' ' }.let {
             ident = try {
-                it.also { it.checkIdent() }
+                it.trim().also { it.checkIdent() }
             } catch (e: Exception) {
                 null
             }

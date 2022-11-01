@@ -2,7 +2,7 @@ package program
 
 // <описание вычислений> ::= <список присваиваний>
 // <список присваиваний> ::= <присваивание> | <присваивание> <список присваиваний>
-class AssignmentsList(private val data: String) {
+class AssignmentsList(private val data: String, vars: Collection<Ident>) {
 
     var assignments = mutableListOf<Assignment>()
         private set
@@ -18,12 +18,29 @@ class AssignmentsList(private val data: String) {
             .split(';')
             .forEachIndexed { i, assign ->
                 try {
-                assignments.add(Assignment(assign))
+                    val ass = Assignment(assign)
+                    checkIdents(ass, vars)
+                    assignments.add(ass)
                 } catch (e: Exception) {
                     throw Exception("Line ${i+2}: ${e.message}")
                 }
-        }
-
+            }
     }
 
+    private fun checkIdents(ass: Assignment, vars: Collection<Ident>) {
+        if (!vars.contains(ass.ident)) {
+            throw Exception("Undefined variable - ${ass.ident}")
+        }
+        checkIdents(ass.expression.subExpression, vars)
+    }
+    private fun checkIdents(subExp: SubExpression, vars: Collection<Ident>) {
+        subExp.expression?.subExpression?.let { checkIdents(it, vars) }
+        subExp.subExpression1?.let { checkIdents(it, vars) }
+        subExp.subExpression2?.let { checkIdents(it, vars) }
+        subExp.operand?.ident?.let {
+            if (!vars.contains(it)) {
+                throw Exception("Undefined variable - $it")
+            }
+        }
+    }
 }

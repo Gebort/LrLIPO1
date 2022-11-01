@@ -28,7 +28,7 @@ class Program(private val data: String) {
         val assignmentsList = trimmedData.substring(varListEnd + 1, trimmedData.length)
 
         varList = VarList(varListString)
-        assignments = AssignmentsList(assignmentsList)
+        assignments = AssignmentsList(assignmentsList, varList.vars)
     }
 
 }

@@ -11,7 +11,7 @@ class Assignment(private val data: String) {
         if (splittedData.size != 2){
             throw Exception("Each assignment line must contain only one =")
         }
-        ident = splittedData[0].also { it.checkIdent() }
+        ident = splittedData[0].trim().also { it.checkIdent() }
         expression = Expression(splittedData[1])
 
     }

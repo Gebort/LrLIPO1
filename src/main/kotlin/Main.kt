@@ -1,5 +1,4 @@
 import program.Program
-import java.util.*
 
 object Main {
 
@@ -28,7 +27,12 @@ object Main {
             "Var b; b = (2 - 3) + 2) + 4 - a;",
             "Var b; b = 2 + 3 = 5;",
             "Var ; c = 2;",
-            "Var a,,g c = 2;"
+            "Var a,,g c = 2;",
+            "Var a; b = a;",
+            "Var b; b = 5; b = 5 + a;",
+            "Var c, ab; c = ab; abc = 3;",
+            "Var b, a; a = 5 + 2; b = (a + 3) - 4 * c;",
+            "Var ab, c, d; ab = (5-3)+1+d; c = 5*d; c = ((dc * 2) + d) - 3 * d;"
         )
     }
 

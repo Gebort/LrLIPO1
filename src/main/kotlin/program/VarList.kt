@@ -22,8 +22,9 @@ class VarList(private val data: String) {
 
             trimmedData.split(',')
                 .forEach { ident ->
-                    ident.checkIdent()
-                    vars.add(ident)
+                    val trimmed = ident.trim()
+                    trimmed.checkIdent()
+                    vars.add(trimmed)
                 }
         } catch (e: Exception) {
             throw (Exception("Line 1: ${e.message}"))
