@@ -42,6 +42,7 @@ object Main {
                 println("==================")
                 println("Test $i: $str")
                 val program = Program(str)
+                println("Target: ${program.toTarget()}")
                 println("Success")
             } catch (e: Exception) {
                 println(e.message)

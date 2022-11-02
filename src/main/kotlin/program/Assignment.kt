@@ -15,4 +15,8 @@ class Assignment(private val data: String) {
         expression = Expression(splittedData[1])
 
     }
+
+    fun toTarget(): String {
+        return ident + " := " + expression.toTarget() + ";"
+    }
 }

@@ -43,4 +43,10 @@ class AssignmentsList(private val data: String, vars: Collection<Ident>) {
             }
         }
     }
+
+    fun toTarget(): String {
+        return assignments
+            .map { it.toTarget() }
+            .joinToString(prefix = "Begin ", separator = " ", postfix = " End")
+    }
 }

@@ -10,20 +10,19 @@ class SubExpression(private val data: String) {
     val binary: Binary?
 
     init {
-        val trimmedData = data.trim{ it == ' ' }
+        val trimmedData = data.trim { it == ' ' }
 
         if (trimmedData.isEmpty()) {
             throw Exception("Empty sub expression")
         }
 
         if (trimmedData.first() == '(' && trimmedData.last() == ')') {
-            expression = Expression(trimmedData.substring(1, trimmedData.length-1))
+            expression = Expression(trimmedData.substring(1, trimmedData.length - 1))
             operand = null
             subExpression1 = null
             subExpression2 = null
             binary = null
-        }
-        else {
+        } else {
             operand = try {
                 Operand(trimmedData)
             } catch (e: Exception) {
@@ -34,11 +33,10 @@ class SubExpression(private val data: String) {
                 subExpression1 = null
                 subExpression2 = null
                 binary = null
-            }
-            else {
+            } else {
 
                 val binaryIndex = findBinaryIndex(trimmedData)
-                val left =  trimmedData.substring(0, binaryIndex)
+                val left = trimmedData.substring(0, binaryIndex)
                 val right = trimmedData.substring(binaryIndex + 1)
 
                 binary = trimmedData[binaryIndex]
@@ -58,26 +56,33 @@ class SubExpression(private val data: String) {
         }
     }
 
-    private fun findBinaryIndex(data: String): Int  {
+    private fun findBinaryIndex(data: String): Int {
         var openBrackets = 0
         data.forEachIndexed { i, char ->
             if (char == '(') {
                 openBrackets++
-            }
-            else if (char == ')') {
+            } else if (char == ')') {
                 openBrackets--
             }
-            if (openBrackets == 0 && isBinarySafe(char)){
+            if (openBrackets == 0 && isBinarySafe(char)) {
                 return i
             }
         }
-        if (openBrackets > 0){
+        if (openBrackets > 0) {
             throw Exception("Missing closing brackets")
-        }
-        else if (openBrackets < 0){
+        } else if (openBrackets < 0) {
             throw Exception("Missing opening brackets")
         }
         throw Exception("No binary operator in line")
     }
 
+    fun toTarget(): String {
+        if (expression != null) {
+            return "("+expression.toTarget()+")"
+        } else if (operand != null) {
+            return operand.toTarget()
+        } else {
+            return subExpression1!!.toTarget() + binary + subExpression2!!.toTarget()
+        }
+    }
 }

@@ -31,4 +31,8 @@ class Program(private val data: String) {
         assignments = AssignmentsList(assignmentsList, varList.vars)
     }
 
+    fun toTarget(): String {
+        return varList.toTarget() + " " + assignments.toTarget()
+    }
+
 }

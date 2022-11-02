@@ -23,6 +23,15 @@ class Operand(private val data: String) {
                 throw Exception("Operand must be ident or constant")
             }
         }
+    }
 
+    fun toTarget(): String {
+        if (ident != null) {
+            return ident
+        }
+        else if (constant != null) {
+            return constant.toString()
+        }
+        else throw Exception("Invalid operand")
     }
 }

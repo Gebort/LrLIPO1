@@ -3,7 +3,7 @@ package program
 // <выражение> ::= <ун. оп.> <подвыражение> | <подвыражение>
 class Expression(private val data: String) {
 
-    val unary: Unary?
+    private val unary: Unary?
     val subExpression: SubExpression
 
     init {
@@ -23,6 +23,15 @@ class Expression(private val data: String) {
         }
 
         subExpression = SubExpression(trimmedData)
+    }
+
+    fun toTarget(): String {
+        if (unary != null) {
+            return unary + subExpression.toTarget()
+        }
+        else {
+            return subExpression.toTarget()
+        }
     }
 
 }

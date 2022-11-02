@@ -17,7 +17,7 @@ class VarList(private val data: String) {
                 throw Exception("Remove the , from the declaration list start")
             }
             if (trimmedData.contains(Regex(",{2}"))) {
-                throw Exception("Missed variable in variables list")
+                throw Exception("Missed variable")
             }
 
             trimmedData.split(',')
@@ -29,6 +29,10 @@ class VarList(private val data: String) {
         } catch (e: Exception) {
             throw (Exception("Line 1: ${e.message}"))
         }
+    }
+
+    fun toTarget(): String {
+        return "Var " + vars.joinToString(separator = ", ")
     }
 
 }
